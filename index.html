@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bazyyvs | Marketplace com IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--card:#0f172a;--primary:#3b82f6;--primary2:#2563eb;--text:#fff;--gray:#94a3b8;--border:rgba(255,255,255,0.08);--success:#22c55e;--danger:#ef4444;--warning:#f59e0b;--accent:#8b5cf6}
+body{background:var(--bg);color:var(--text);font-family:'Poppins',sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{width:100%;display:block}
+.container{width:100%;max-width:1300px;margin:auto;padding:0 20px}
+
+header{position:sticky;top:0;z-index:999;background:rgba(2,6,23,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{font-size:30px;font-weight:800}.logo span{color:var(--primary)}
+nav{display:flex;gap:25px}nav a{color:var(--gray);transition:.3s;font-weight:500}nav a:hover{color:white}
+.header-buttons{display:flex;gap:12px}
+.btn{background:var(--primary);padding:12px 20px;border-radius:12px;color:white;font-weight:600;transition:.3s;border:none;cursor:pointer;font-family:inherit;font-size:14px}
+.btn:hover{background:var(--primary2);transform:translateY(-2px)}
+.btn-outline{border:1px solid rgba(255,255,255,0.2);padding:12px 20px;border-radius:12px;background:transparent;color:white;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px;transition:.3s}
+.btn-outline:hover{background:rgba(255,255,255,0.05)}
+.btn-success{background:var(--success)}.btn-success:hover{background:#16a34a}
+.btn-danger{background:var(--danger)}.btn-danger:hover{background:#dc2626}
+.btn-accent{background:var(--accent)}.btn-accent:hover{background:#7c3aed}
+.btn-sm{padding:8px 14px;font-size:12px}
+
+.hero{padding:80px 0}
+.hero-content{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px}
+.hero-text h1{font-size:58px;line-height:1.1;margin-bottom:25px}
+.hero-text h1 span{color:var(--primary)}
+.hero-text p{color:var(--gray);line-height:1.8;font-size:18px;margin-bottom:35px}
+.hero-buttons{display:flex;gap:15px;flex-wrap:wrap}
+.hero-image{position:relative}.hero-image img{border-radius:30px}
+.floating-card{position:absolute;bottom:-20px;left:-20px;background:rgba(15,23,42,0.95);border:1px solid var(--border);padding:20px;border-radius:20px;width:260px;backdrop-filter:blur(10px)}
+
+.stats{padding:60px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.stat-card{background:var(--card);border:1px solid var(--border);padding:30px;border-radius:24px;text-align:center;transition:.3s}
+.stat-card:hover{transform:translateY(-5px);border-color:var(--primary)}
+.stat-card h2{font-size:42px;margin-bottom:10px;color:var(--primary)}
+.stat-card p{color:var(--gray)}
+
+.section-title{text-align:center;margin-bottom:60px}
+.section-title h2{font-size:48px;margin-bottom:15px}
+.section-title p{color:var(--gray)}
+
+.products{padding:80px 0}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:28px;overflow:hidden;transition:.4s;position:relative}
+.product-card:hover{transform:translateY(-10px);border-color:var(--primary)}
+.product-badge{position:absolute;top:15px;right:15px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;z-index:2}
+.product-badge.hot{background:var(--danger);color:white}
+.product-badge.new{background:var(--success);color:white}
+.product-badge.trend{background:var(--warning);color:black}
+.product-img{height:220px;overflow:hidden}.product-img img{height:100%;object-fit:cover;transition:.3s}
+.product-card:hover .product-img img{transform:scale(1.05)}
+.product-content{padding:25px}.product-content h3{margin-bottom:8px;font-size:22px}
+.product-content p{color:var(--gray);line-height:1.7;margin-bottom:15px;font-size:14px}
+.price{font-size:28px;font-weight:700;margin-bottom:8px}
+.price-original{font-size:16px;color:var(--gray);text-decoration:line-through;margin-left:8px}
+.price-suggestion{font-size:12px;color:var(--success);margin-bottom:15px}
+.product-actions{display:flex;gap:10px;flex-wrap:wrap}
+.product-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tag{background:rgba(59,130,246,0.15);color:var(--primary);padding:4px 10px;border-radius:8px;font-size:11px}
+
+.search-section{padding:40px 0;background:linear-gradient(180deg,rgba(59,130,246,0.1),transparent)}
+.search-box{max-width:700px;margin:0 auto;position:relative}
+.search-box input{width:100%;padding:18px 60px 18px 24px;border-radius:16px;border:1px solid var(--border);background:var(--card);color:white;font-size:16px;font-family:inherit;outline:none;transition:.3s}
+.search-box input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,0.2)}
+.search-box button{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--primary);border:none;padding:12px 20px;border-radius:12px;color:white;cursor:pointer;font-weight:600}
+.search-filters{display:flex;gap:10px;justify-content:center;margin-top:15px;flex-wrap:wrap}
+.filter-chip{background:var(--card);border:1px solid var(--border);padding:8px 16px;border-radius:20px;font-size:13px;cursor:pointer;transition:.3s}
+.filter-chip:hover,.filter-chip.active{background:var(--primary);border-color:var(--primary)}
+
+.auction{padding:80px 0}
+.auction-box{background:linear-gradient(135deg,#1e3a8a,#2563eb);border-radius:35px;padding:60px;text-align:center;position:relative;overflow:hidden}
+.auction-box::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(255,255,255,0.1),transparent 60%);animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.auction-box h2{font-size:52px;margin-bottom:20px;position:relative;z-index:1}
+.auction-box p{font-size:18px;line-height:1.7;margin-bottom:30px;position:relative;z-index:1}
+.countdown{display:flex;justify-content:center;gap:20px;margin-bottom:30px;position:relative;z-index:1}
+.time{background:rgba(255,255,255,0.1);padding:20px;border-radius:20px;min-width:100px;backdrop-filter:blur(10px)}
+.time h3{font-size:40px}.time span{font-size:14px;color:rgba(255,255,255,0.7)}
+
+.membership{padding:80px 0}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
+.plan{background:var(--card);border:1px solid var(--border);padding:40px;border-radius:28px;transition:.3s;position:relative}
+.plan:hover{border-color:var(--primary);transform:translateY(-5px)}
+.plan.featured{border-color:var(--primary);transform:scale(1.05)}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--primary);padding:6px 20px;border-radius:20px;font-size:12px;font-weight:600}
+.plan h3{font-size:30px;margin-bottom:15px}
+.plan-price{font-size:50px;margin-bottom:20px;font-weight:800}
+.plan-price span{font-size:18px;color:var(--gray);font-weight:400}
+.plan ul{list-style:none;margin-bottom:30px}
+.plan ul li{margin-bottom:12px;color:var(--gray);display:flex;align-items:center;gap:8px}
+.plan ul li::before{content:"✓";color:var(--success);font-weight:700}
+
+.dashboard{padding:80px 0}
+.dashboard-grid{display:grid;grid-template-columns:280px 1fr;gap:30px}
+.sidebar{background:var(--card);border-radius:28px;padding:30px;border:1px solid var(--border);height:fit-content;position:sticky;top:100px}
+.sidebar h3{margin-bottom:20px;font-size:18px}
+.sidebar a{display:flex;align-items:center;gap:10px;padding:14px;border-radius:12px;margin-bottom:8px;color:var(--gray);transition:.3s;font-size:14px}
+.sidebar a:hover,.sidebar a.active{background:rgba(255,255,255,0.05);color:white}
+.sidebar a .icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:rgba(59,130,246,0.15);border-radius:8px;font-size:14px}
+.dashboard-content{background:var(--card);border-radius:28px;padding:40px;border:1px solid var(--border)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:30px}
+.stat-box{background:rgba(255,255,255,0.03);padding:20px;border-radius:16px;text-align:center}
+.stat-box .value{font-size:28px;font-weight:700;color:var(--primary)}
+.stat-box .label{font-size:12px;color:var(--gray);margin-top:5px}
+
+.ai-tools{padding:80px 0;background:linear-gradient(180deg,transparent,rgba(59,130,246,0.05),transparent)}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:25px}
+.ai-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:30px;transition:.3s}
+.ai-card:hover{border-color:var(--primary);transform:translateY(-5px)}
+.ai-card .icon{width:50px;height:50px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
+.ai-card h3{font-size:20px;margin-bottom:10px}
+.ai-card p{color:var(--gray);font-size:14px;line-height:1.7;margin-bottom:20px}
+.ai-card textarea,.ai-card input,.ai-card select{width:100%;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:white;font-family:inherit;font-size:14px;outline:none;resize:vertical;margin-bottom:12px}
+.ai-card textarea:focus,.ai-card input:focus,.ai-card select:focus{border-color:var(--primary)}
+.ai-output{background:rgba(0,0,0,0.3);border-radius:12px;padding:16px;margin-top:15px;font-size:14px;line-height:1.7;min-height:60px;border:1px dashed var(--border);color:var(--gray)}
+.ai-output.has-content{color:white;border-color:var(--primary);background:rgba(59,130,246,0.05)}
+
+.chatbot-container{position:fixed;bottom:30px;right:30px;z-index:1000}
+.chatbot-toggle{width:60px;height:60px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 40px rgba(59,130,246,0.4);transition:.3s;font-size:24px;border:none;color:white}
+.chatbot-toggle:hover{transform:scale(1.1)}
+.chatbot-window{position:absolute;bottom:80px;right:0;width:380px;height:520px;background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.chatbot-window.open{display:flex}
+.chatbot-header{padding:20px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;gap:12px}
+.chatbot-header .avatar{width:40px;height:40px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.chatbot-header .info h4{font-size:16px}.chatbot-header .info span{font-size:12px;opacity:0.8}
+.chatbot-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+.chat-message{max-width:85%;padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.6;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.chat-message.user{align-self:flex-end;background:var(--primary);border-bottom-right-radius:4px}
+.chat-message.bot{align-self:flex-start;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-bottom-left-radius:4px}
+.chat-message.bot.typing{background:transparent;border:none;padding:8px 0}
+.typing-dots{display:flex;gap:4px}.typing-dots span{width:8px;height:8px;background:var(--gray);border-radius:50%;animation:typing 1.4s infinite}.typing-dots span:nth-child(2){animation-delay:.2s}.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-8px)}}
+.chatbot-footer{padding:15px;border-top:1px solid var(--border);display:flex;gap:10px}
+.chatbot-footer input{flex:1;padding:12px 16px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:white;font-family:inherit;outline:none;font-size:14px}
+.chatbot-footer input:focus{border-color:var(--primary)}
+.chatbot-footer button{background:var(--primary);border:none;padding:12px 16px;border-radius:12px;color:white;cursor:pointer;font-weight:600}
+.quick-replies{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.quick-reply{background:rgba(59,130,246,0.15);color:var(--primary);padding:6px 12px;border-radius:20px;font-size:12px;cursor:pointer;border:none;font-family:inherit;transition:.3s}
+.quick-reply:hover{background:var(--primary);color:white}
+
+.trade-section{padding:80px 0}
+.trade-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.trade-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:30px}
+.trade-card h3{margin-bottom:20px;font-size:22px}
+.trade-item{display:flex;gap:15px;align-items:center;padding:15px;background:rgba(255,255,255,0.03);border-radius:16px;margin-bottom:12px;cursor:pointer;transition:.3s;border:2px solid transparent}
+.trade-item:hover,.trade-item.selected{border-color:var(--primary);background:rgba(59,130,246,0.05)}
+.trade-item img{width:60px;height:60px;border-radius:12px;object-fit:cover}
+.trade-item .info h4{font-size:15px;margin-bottom:4px}.trade-item .info p{font-size:13px;color:var(--gray)}
+.trade-arrow{display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--primary);padding:20px}
+.trade-result{background:rgba(34,197,94,0.1);border:1px solid var(--success);border-radius:16px;padding:20px;text-align:center;margin-top:20px;display:none}
+.trade-result.show{display:block}
+.trade-result h4{color:var(--success);margin-bottom:10px}
+
+footer{border-top:1px solid var(--border);padding:50px 0}
+.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}
+footer h3{margin-bottom:20px;font-size:18px}
+footer p,footer a{color:var(--gray);display:block;margin-bottom:10px;font-size:14px;transition:.3s}
+footer a:hover{color:white}
+.copyright{text-align:center;margin-top:40px;color:var(--gray);font-size:14px}
+
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:40px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--gray);font-size:24px;cursor:pointer}
+.modal h2{margin-bottom:20px}.modal p{color:var(--gray);margin-bottom:20px;line-height:1.7}
+.modal input,.modal select{width:100%;padding:14px 18px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:white;font-family:inherit;margin-bottom:15px;outline:none;font-size:14px}
+.modal input:focus,.modal select:focus{border-color:var(--primary)}
+
+.notification-container{position:fixed;top:100px;right:30px;z-index:1500;display:flex;flex-direction:column;gap:10px}
+.notification{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 10px 40px rgba(0,0,0,0.3);animation:slideIn .4s ease;max-width:350px}
+@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
+.notification.success{border-color:var(--success)}.notification.success .notif-icon{color:var(--success)}
+.notification.warning{border-color:var(--warning)}.notification.warning .notif-icon{color:var(--warning)}
+.notification.info{border-color:var(--primary)}.notification.info .notif-icon{color:var(--primary)}
+.notif-icon{font-size:20px}.notif-content h4{font-size:14px;margin-bottom:2px}.notif-content p{font-size:12px;color:var(--gray)}
+
+@media(max-width:950px){
+.hero-content,.dashboard-grid,.footer-grid,.stats-grid,.trade-grid{grid-template-columns:1fr}
+.hero-text h1{font-size:42px}nav{display:none}
+.chatbot-window{width:calc(100vw - 40px);right:-15px}
+.stats-row{grid-template-columns:repeat(2,1fr)}
+}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--gray)}
+</style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- NOTIFICATIONS -->
+<div class="notification-container" id="notificationContainer"></div>
+
+<!-- HEADER -->
+<header>
+<div class="container navbar">
+<div class="logo">Bazy<span>yvs</span></div>
+<nav>
+<a href="#hero">Inicio</a>
+<a href="#products">Marketplace</a>
+<a href="#auction">Leiloes</a>
+<a href="#trade">Trocas</a>
+<a href="#ai-tools">Ferramentas IA</a>
+<a href="#plans">Planos</a>
+</nav>
+<div class="header-buttons">
+<button class="btn-outline" onclick="openModal('login')">Entrar</button>
+<button class="btn" onclick="openModal('register')">Criar Conta</button>
+</div>
+</div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+<div class="container hero-content">
+<div class="hero-text">
+<h1>O maior marketplace com <span>Inteligencia Artificial</span> do Brasil</h1>
+<p>Venda produtos com precos otimizados por IA, participe de leiloes inteligentes, troque itens com match automatico e tenha um assistente virtual 24h negociando por voce.</p>
+<div class="hero-buttons">
+<a href="#products" class="btn">Explorar Agora</a>
+<a href="#ai-tools" class="btn-outline">Ferramentas IA</a>
+</div>
+</div>
+<div class="hero-image">
+<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200" alt="Marketplace">
+<div class="floating-card">
+<h4 style="margin-bottom:8px;">Assistente IA</h4>
+<p style="color:var(--gray);font-size:13px;">Oi! Posso te ajudar a vender mais rapido?</p>
+<div style="margin-top:12px;font-size:20px;font-weight:700;color:var(--primary);">Online 24h</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- SEARCH -->
+<section class="search-section">
+<div class="container">
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Busque por produtos, categorias, precos..." onkeyup="handleSearch(event)">
+<button onclick="performSearch()">Buscar</button>
+</div>
+<div class="search-filters">
+<span class="filter-chip active" onclick="setFilter(this,'all')">Todos</span>
+<span class="filter-chip" onclick="setFilter(this,'eletronicos')">Eletronicos</span>
+<span class="filter-chip" onclick="setFilter(this,'veiculos')">Veiculos</span>
+<span class="filter-chip" onclick="setFilter(this,'moda')">Moda</span>
+<span class="filter-chip" onclick="setFilter(this,'casa')">Casa</span>
+<span class="filter-chip" onclick="setFilter(this,'leilao')">Em Leilao</span>
+<span class="filter-chip" onclick="setFilter(this,'troca')">Aceita Troca</span>
+</div>
+</div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+<div class="container stats-grid">
+<div class="stat-card"><h2>120K+</h2><p>Usuarios ativos</p></div>
+<div class="stat-card"><h2>45K+</h2><p>Produtos anunciados</p></div>
+<div class="stat-card"><h2>12K+</h2><p>Leiloes realizados</p></div>
+<div class="stat-card"><h2>98%</h2><p>Clientes satisfeitos</p></div>
+</div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+<div class="container">
+<div class="section-title">
+<h2>Produtos em destaque</h2>
+<p>Recomendados pela nossa IA baseado nas tendencias do mercado</p>
+</div>
+<div class="product-grid" id="productGrid"></div>
+</div>
+</section>
+
+<!-- AUCTION -->
+<section class="auction" id="auction">
+<div class="container">
+<div class="auction-box">
+<h2>Leilao Semanal Premium</h2>
+<p>Participe dos maiores leiloes exclusivos da plataforma. A IA analisa o valor de mercado em tempo real e sugere o lance ideal.</p>
+<div class="countdown" id="countdown">
+<div class="time"><h3 id="cdDays">02</h3><span>Dias</span></div>
+<div class="time"><h3 id="cdHours">14</h3><span>Horas</span></div>
+<div class="time"><h3 id="cdMinutes">36</h3><span>Min</span></div>
+<div class="time"><h3 id="cdSeconds">45</h3><span>Seg</span></div>
+</div>
+<button class="btn" style="position:relative;z-index:1;" onclick="placeBid()">Dar Lance Inteligente (IA sugere R$ 8.750)</button>
+</div>
+</div>
+</section>
+
+<!-- AI TOOLS -->
+<section class="ai-tools" id="ai-tools">
+<div class="container">
+<div class="section-title">
+<h2>Ferramentas de IA</h2>
+<p>Automacao inteligente para vender mais e melhor</p>
+</div>
+<div class="ai-grid">
+
+<div class="ai-card">
+<div class="icon">&#9997;</div>
+<h3>Gerador de Descricoes IA</h3>
+<p>Crie descricoes profissionais e persuasivas para seus produtos automaticamente.</p>
+<input type="text" id="descProductName" placeholder="Nome do produto (ex: iPhone 15 Pro)">
+<select id="descCategory">
+<option value="">Selecione a categoria</option>
+<option value="eletronico">Eletronico</option>
+<option value="veiculo">Veiculo</option>
+<option value="moda">Moda</option>
+<option value="casa">Casa e Decoracao</option>
+<option value="esporte">Esporte</option>
+</select>
+<textarea id="descDetails" rows="2" placeholder="Detalhes rapidos (ex: 256GB, cor preta, seminovo)"></textarea>
+<button class="btn" onclick="generateDescription()">Gerar Descricao</button>
+<div class="ai-output" id="descOutput">A descricao gerada aparecera aqui...</div>
+</div>
+
+<div class="ai-card">
+<div class="icon">&#128176;</div>
+<h3>Precificador Inteligente</h3>
+<p>A IA analisa produtos similares e sugere o preco ideal de venda.</p>
+<input type="text" id="priceProduct" placeholder="Nome do produto">
+<select id="priceCondition">
+<option value="">Condicao</option>
+<option value="novo">Novo (lacrado)</option>
+<option value="seminovo">Seminovo</option>
+<option value="usado">Usado</option>
+<option value="antigo">Antigo / Vintage</option>
+</select>
+<input type="number" id="priceOriginal" placeholder="Preco original de compra (R$)">
+<button class="btn" onclick="suggestPrice()">Analisar Preco</button>
+<div class="ai-output" id="priceOutput">A analise de preco aparecera aqui...</div>
+</div>
+
+<div class="ai-card">
+<div class="icon">&#128260;</div>
+<h3>Match de Trocas IA</h3>
+<p>Informe o que voce tem e o que quer. A IA encontra as melhores combinacoes.</p>
+<input type="text" id="tradeHave" placeholder="O que voce tem? (ex: PlayStation 5)">
+<input type="text" id="tradeWant" placeholder="O que voce quer? (ex: Xbox Series X)">
+<button class="btn" onclick="findTradeMatch()">Encontrar Match</button>
+<div class="ai-output" id="tradeOutput">Os matches de troca aparecerao aqui...</div>
+</div>
+
+<div class="ai-card">
+<div class="icon">&#128202;</div>
+<h3>Analytics de Mercado</h3>
+<p>Veja tendencias e previsoes de demanda baseado em dados reais.</p>
+<select id="analyticsCategory">
+<option value="">Escolha uma categoria</option>
+<option value="eletronicos">Eletronicos</option>
+<option value="veiculos">Veiculos</option>
+<option value="moda">Moda</option>
+<option value="imoveis">Imoveis</option>
+</select>
+<button class="btn" onclick="showAnalytics()">Ver Analise</button>
+<div class="ai-output" id="analyticsOutput">Os dados de mercado aparecerao aqui...</div>
+</div>
+
+<div class="ai-card">
+<div class="icon">&#128172;</div>
+<h3>Assistente de Negociacao</h3>
+<p>Simule uma negociacao. A IA te ensina as melhores respostas.</p>
+<input type="text" id="negoProduct" placeholder="Produto em negociacao">
+<input type="number" id="negoPrice" placeholder="Seu preco de venda (R$)">
+<input type="text" id="negoBuyerMsg" placeholder="Mensagem do comprador (ex: Faz por 800?)">
+<button class="btn" onclick="generateNegotiationResponse()">Gerar Resposta</button>
+<div class="ai-output" id="negoOutput">A resposta sugerida aparecera aqui...</div>
+</div>
+
+<div class="ai-card">
+<div class="icon">&#127919;</div>
+<h3>Otimizador de Titulos</h3>
+<p>Crie titulos que aparecem primeiro nas buscas.</p>
+<input type="text" id="titleInput" placeholder="Titulo atual do anuncio">
+<select id="titlePlatform">
+<option value="bazyyvs">Bazyyvs</option>
+<option value="olx">OLX</option>
+<option value="mercadolivre">Mercado Livre</option>
+<option value="facebook">Facebook Marketplace</option>
+</select>
+<button class="btn" onclick="optimizeTitle()">Otimizar Titulo</button>
+<div class="ai-output" id="titleOutput">O titulo otimizado aparecera aqui...</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- TRADE -->
+<section class="trade-section" id="trade">
+<div class="container">
+<div class="section-title">
+<h2>Sistema de Trocas Inteligente</h2>
+<p>A IA calcula o valor justo e sugere as melhores combinacoes</p>
+</div>
+<div class="trade-grid">
+<div class="trade-card">
+<h3>Voce tem</h3>
+<div class="trade-item selected" onclick="selectTradeItem(this,'have')">
+<img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=200" alt="PS5">
+<div class="info"><h4>PlayStation 5</h4><p>Valor estimado: R$ 3.200</p></div>
+</div>
+<div class="trade-item" onclick="selectTradeItem(this,'have')">
+<img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=200" alt="iPhone">
+<div class="info"><h4>iPhone 14 Pro</h4><p>Valor estimado: R$ 4.500</p></div>
+</div>
+<div class="trade-item" onclick="selectTradeItem(this,'have')">
+<img src="https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?q=80&w=200" alt="Bike">
+<div class="info"><h4>Bike Aro 29</h4><p>Valor estimado: R$ 2.100</p></div>
+</div>
+</div>
+<div class="trade-arrow">&#8644;</div>
+<div class="trade-card">
+<h3>Voce quer</h3>
+<div class="trade-item" onclick="selectTradeItem(this,'want')">
+<img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=200" alt="Notebook">
+<div class="info"><h4>Notebook Gamer</h4><p>Valor estimado: R$ 5.500</p></div>
+</div>
+<div class="trade-item" onclick="selectTradeItem(this,'want')">
+<img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?q=80&w=200" alt="Moto">
+<div class="info"><h4>Moto 150cc</h4><p>Valor estimado: R$ 6.000</p></div>
+</div>
+<div class="trade-item" onclick="selectTradeItem(this,'want')">
+<img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=200" alt="Watch">
+<div class="info"><h4>Apple Watch Ultra</h4><p>Valor estimado: R$ 4.800</p></div>
+</div>
+</div>
+</div>
+<div class="trade-result" id="tradeResult">
+<h4>Troca Justa Detectada!</h4>
+<p id="tradeResultText">A IA analisou o mercado e considera essa troca equilibrada.</p>
+<button class="btn" style="margin-top:15px;" onclick="showNotification('Proposta de troca enviada!','success')">Enviar Proposta</button>
+</div>
+</div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section class="membership" id="plans">
+<div class="container">
+<div class="section-title">
+<h2>Planos de Membros</h2>
+<p>Escolha o melhor plano para voce</p>
+</div>
+<div class="plans">
+<div class="plan">
+<h3>Starter</h3>
+<div class="plan-price">R$ 0<span>/mes</span></div>
+<ul>
+<li>5 anuncios ativos</li>
+<li>Participar de leiloes</li>
+<li>Sistema de trocas basico</li>
+<li>Suporte por email</li>
+</ul>
+<button class="btn-outline" style="width:100%">Comecar</button>
+</div>
+<div class="plan featured">
+<div class="plan-badge">MAIS POPULAR</div>
+<h3>Premium</h3>
+<div class="plan-price">R$ 39<span>/mes</span></div>
+<ul>
+<li>Anuncios ilimitados</li>
+<li>Destaque nos produtos</li>
+<li>Menor comissao (5%)</li>
+<li>Leiloes VIP</li>
+<li>IA de precificacao avancada</li>
+<li>Prioridade no suporte</li>
+</ul>
+<button class="btn" style="width:100%">Assinar Agora</button>
+</div>
+<div class="plan">
+<h3>Business</h3>
+<div class="plan-price">R$ 99<span>/mes</span></div>
+<ul>
+<li>Tudo do Premium</li>
+<li>API de integracao</li>
+<li>IA de vendas dedicada</li>
+<li>Analytics avancado</li>
+<li>Gerente de conta</li>
+<li>Comissao 0%</li>
+</ul>
+<button class="btn-outline" style="width:100%">Falar com Vendas</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="dashboard" id="dashboard">
+<div class="container">
+<div class="section-title">
+<h2>Seu Painel</h2>
+<p>Acompanhe tudo com inteligencia artificial</p>
+</div>
+<div class="dashboard-grid">
+<div class="sidebar">
+<h3>Menu</h3>
+<a href="#" class="active"><span class="icon">&#128202;</span> Dashboard</a>
+<a href="#"><span class="icon">&#128230;</span> Meus Produtos</a>
+<a href="#"><span class="icon">&#127991;</span> Meus Leiloes</a>
+<a href="#"><span class="icon">&#128172;</span> Mensagens <span style="background:var(--danger);padding:2px 8px;border-radius:10px;font-size:11px;margin-left:auto;">3</span></a>
+<a href="#"><span class="icon">&#128260;</span> Trocas</a>
+<a href="#"><span class="icon">&#10084;</span> Favoritos</a>
+<a href="#"><span class="icon">&#9881;</span> Configuracoes</a>
+</div>
+<div class="dashboard-content">
+<div class="stats-row">
+<div class="stat-box"><div class="value">1.247</div><div class="label">Visualizacoes</div></div>
+<div class="stat-box"><div class="value">23</div><div class="label">Vendas</div></div>
+<div class="stat-box"><div class="value">R$ 8.450</div><div class="label">Receita</div></div>
+<div class="stat-box"><div class="value">4.2%</div><div class="label">Conversao</div></div>
+</div>
+<h3 style="margin-bottom:20px;">Tendencias de Vendas (IA)</h3>
+<div style="background:rgba(255,255,255,0.03);border-radius:16px;padding:30px;height:250px;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--gray);">
+<div style="text-align:center;">
+<div style="font-size:48px;margin-bottom:10px;">&#128202;</div>
+<p>Grafico de vendas com previsao de demanda</p>
+<p style="font-size:12px;margin-top:10px;">A IA preve um aumento de <strong style="color:var(--success);">+15%</strong> nas vendas esta semana</p>
+</div>
+</div>
+<h3 style="margin:30px 0 20px;">Recomendacoes da IA</h3>
+<div style="background:rgba(34,197,94,0.1);border:1px solid var(--success);border-radius:16px;padding:20px;">
+<p style="color:var(--success);font-weight:600;margin-bottom:10px;">Oportunidade detectada!</p>
+<p style="color:var(--gray);font-size:14px;line-height:1.7;">Produtos eletronicos estao com demanda alta (+32%). Recomendamos anunciar entre <strong>18h e 21h</strong> para maximo alcance. Seu iPhone 15 Pro esta <strong>12% abaixo do preco de mercado</strong> — ajuste para R$ 6.600 para vender em ate 2 dias.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+<div class="footer-grid">
+<div>
+<h3>Bazyyvs</h3>
+<p>Marketplace premium com IA para trocas e leiloes online.</p>
+</div>
+<div>
+<h3>Empresa</h3>
+<a href="#">Sobre</a>
+<a href="#">Carreiras</a>
+<a href="#">Blog</a>
+</div>
+<div>
+<h3>Suporte</h3>
+<a href="#">Central de ajuda</a>
+<a href="#">Contato</a>
+<a href="#">Privacidade</a>
+</div>
+<div>
+<h3>Social</h3>
+<a href="#">Instagram</a>
+<a href="#">TikTok</a>
+<a href="#">YouTube</a>
+</div>
+</div>
+<div class="copyright">2026 Bazyyvs • Todos os direitos reservados • Powered by IA</div>
+</div>
+</footer>
+
+<!-- CHATBOT -->
+<div class="chatbot-container">
+<div class="chatbot-window" id="chatbotWindow">
+<div class="chatbot-header">
+<div class="avatar">&#129302;</div>
+<div class="info"><h4>Bazzy IA</h4><span>Online agora</span></div>
+</div>
+<div class="chatbot-body" id="chatbotBody">
+<div class="chat-message bot">
+Ola! Sou o <strong>Bazzy IA</strong>, seu assistente virtual. Posso te ajudar a:<br><br>
+• Encontrar o melhor preco para vender<br>
+• Sugerir produtos em alta<br>
+• Negociar com compradores<br>
+• Gerar descricoes profissionais<br>
+• Analisar tendencias de mercado
+</div>
+<div class="quick-replies">
+<button class="quick-reply" onclick="sendQuickReply('Como vender mais rapido?')">Como vender mais rapido?</button>
+<button class="quick-reply" onclick="sendQuickReply('Quanto vale meu produto?')">Quanto vale meu produto?</button>
+<button class="quick-reply" onclick="sendQuickReply('O que esta em alta?')">O que esta em alta?</button>
+<button class="quick-reply" onclick="sendQuickReply('Me ajude a negociar')">Me ajude a negociar</button>
+</div>
+</div>
+<div class="chatbot-footer">
+<input type="text" id="chatInput" placeholder="Digite sua mensagem..." onkeypress="handleChatKey(event)">
+<button onclick="sendChatMessage()">Enviar</button>
+</div>
+</div>
+<button class="chatbot-toggle" id="chatbotToggle" onclick="toggleChatbot()">&#128172;</button>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+<div class="modal" onclick="event.stopPropagation()">
+<button class="modal-close" onclick="closeModal()">&times;</button>
+<div id="modalContent"></div>
+</div>
+</div>
