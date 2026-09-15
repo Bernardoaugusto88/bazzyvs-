@@ -12,3 +12,4 @@ Abra `index.html` no navegador ou use o Live Server do VS Code.
 Este projeto é uma demonstração front-end. Login, pagamentos, banco de dados,
 IA real, anúncios persistentes e operações de marketplace ainda precisam de
 back-end/API e serviços externos para funcionarem em produção.
+Projeto Bazyyvs atualizado.
